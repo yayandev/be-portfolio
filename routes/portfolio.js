@@ -140,9 +140,16 @@ router.delete("/:id", authMiddleware, async (req, res) => {
 
 router.put("/:id", authMiddleware, upload.single("image"), async (req, res) => {
   const { id } = req.params;
-  const { title, description, github_url, demo_url, tech_stack } = req.body;
+  const { title, description, github_url, demo_url, tech_stack, image_url } =
+    req.body;
 
   let imageUrl = null;
+
+  if (image_url) {
+    imageUrl = image_url;
+  } else {
+    imageUrl = null;
+  }
 
   if (req.file) {
     const fileExt = req.file.originalname.split(".").pop();
